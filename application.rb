@@ -18,4 +18,8 @@ class Application < Sinatra::Base
       url: url
     }.to_json
   end
+
+  get '/shortened_urls' do
+    url_shortner.urls.to_json
+  end
 end
