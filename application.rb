@@ -19,6 +19,12 @@ class Application < Sinatra::Base
     }.to_json
   end
 
+  get /\/([a-zA-Z0-9]+)/ do |short_url|
+    matched_url = url_shortner.urls[short_url]
+    halt 404 unless matched_url
+    redirect to(matched_url), 301
+  end
+
   get '/shortened_urls' do
     url_shortner.urls.to_json
   end
