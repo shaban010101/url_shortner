@@ -7,6 +7,11 @@ class URLShortner
 
   def generate(url)
     short_url = SecureRandom.hex(3)
+
+    unless url.start_with?('http://')
+      url = 'http://' + url
+    end
+
     urls.merge!("#{short_url}" => url)
     short_url
   end
