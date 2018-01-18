@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'securerandom'
 
 class URLShortner
@@ -8,16 +10,15 @@ class URLShortner
   def generate(url)
     short_url = SecureRandom.hex(3)
 
-    unless url.start_with?('http://')
-      url = 'http://' + url
-    end
+    url = 'http://' + url unless url.start_with?('http://')
 
-    urls.merge!("#{short_url}" => url)
+    urls[short_url.to_s] = url
     short_url
   end
-  
+
   attr_reader :urls
 
   private
+
   attr_writer :urls
 end
