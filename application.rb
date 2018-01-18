@@ -7,7 +7,7 @@ class Application < Sinatra::Base
   post '/api/url' do
     request_body = JSON.parse(request.body.read)
     url = request_body['url']
-    halt 400, { error: 'Please provide a url' }.to_json if url.nil?
+    halt 400, { error: 'Please provide a url' }.to_json if url.nil? || url.empty?
 
     generated_short_url = url_shortner.generate(url)
     short_url = "/#{generated_short_url}"
