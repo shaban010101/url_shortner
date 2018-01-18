@@ -35,15 +35,15 @@ RSpec.describe Application do
     context 'when the short url exists' do
       let(:shortend_url) do
         get('/api/urls')
-        JSON.parse(last_response.body).keys.first
+        JSON.parse(last_response.body).first.keys.first
       end
 
       before do
-        post '/api/url', JSON.generate({ url: url })
+        post '/api/url', JSON.generate(url: url)
       end
 
       it 'redirects to the url' do
-        get("#{shortend_url}")
+        get(shortend_url.to_s)
         expect(last_response.status).to eq(301)
         expect(last_response.location).to eq(url)
       end
@@ -60,7 +60,7 @@ RSpec.describe Application do
   describe 'GET /api/urls' do
     it 'responds successfully' do
       get('/api/urls')
-      expect(JSON.parse(last_response.body)).to be_an(Hash)
+      expect(JSON.parse(last_response.body)).to be_an(Array)
     end
   end
 end

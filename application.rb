@@ -28,6 +28,8 @@ class Application < Sinatra::Base
   end
 
   get '/api/urls' do
-    url_shortner.urls.to_json
+    url_shortner.urls.map do |short_url, url|
+      { short_url.to_s => url }
+    end.to_json
   end
 end
